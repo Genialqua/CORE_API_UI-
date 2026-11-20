@@ -1,0 +1,65 @@
+
+<a class="skip-link" href="#main-content">
+  Skip to main content
+</a>
+
+<div class="app-shell">
+
+  <!-- Application Header -->
+  <header class="site-header">
+    <div class="header-container">
+
+      <a
+        routerLink="/"
+        class="brand"
+        aria-label="Sterling Research home"
+      >
+        <span class="brand-mark" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 19V9m5 10V5m5 14v-7m5 7V8"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="round"
+            />
+          </svg>
+        </span>
+
+        <span class="brand-name">
+          Sterling Research
+        </span>
+      </a>
+
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main
+    id="main-content"
+    class="main-content"
+    tabindex="-1"
+  >
+    <router-outlet />
+  </main>
+
+  <!-- Application Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+
+      <p>
+        Sterling Research — helping you discover and explore
+        open-access research from around the world.
+      </p>
+
+      <p class="footer-copyright">
+        © Sterling Research
+      </p>
+
+    </div>
+  </footer>
+
+</div>
