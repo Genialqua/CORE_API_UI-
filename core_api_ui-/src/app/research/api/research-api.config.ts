@@ -22,7 +22,7 @@ export interface CoreApiConfig {
 
 export const DEFAULT_CORE_API_CONFIG: CoreApiConfig = {
   baseUrl: 'https://api.core.ac.uk/v3',
-  apiKey: 'TP0ZiU5pwfJgBGtXFQjykRbMHa8querN',
+  apiKey: '',
   maxPageSize: 100,
   maxResultWindow: 10_000,
   retryCount: 1,
