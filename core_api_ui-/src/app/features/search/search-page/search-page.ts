@@ -163,19 +163,42 @@ export class SearchPage {
   /**
    * Initiates a new search and resets pagination.
    */
-  protected onSearch(query: string): void {
-    const current = this.urlParams();
+//   protected onSearch(query: string): void {
+//     const current = this.urlParams();
 
-    this.navigate({
-      query,
-      page: 1,
-      pageSize: current?.pageSize ?? DEFAULT_PAGE_SIZE,
-      sort: current?.sort ?? 'relevance',
-      yearFrom: current?.yearFrom ?? null,
-      yearTo: current?.yearTo ?? null,
+//     this.navigate({
+//       query,
+//       page: 1,
+//       pageSize: current?.pageSize ?? DEFAULT_PAGE_SIZE,
+//       sort: current?.sort ?? 'relevance',
+//       yearFrom: current?.yearFrom ?? null,
+//       yearTo: current?.yearTo ?? null,
+//     });
+//   }
+
+protected onSearch(query: string): void {
+  if (!query.trim()) {
+    void this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {},
+      queryParamsHandling: '',
+      replaceUrl: true,
     });
+
+    return;
   }
 
+  const current = this.urlParams();
+
+  this.navigate({
+    query: query.trim(),
+    page: 1,
+    pageSize: current?.pageSize ?? DEFAULT_PAGE_SIZE,
+    sort: current?.sort ?? 'relevance',
+    yearFrom: current?.yearFrom ?? null,
+    yearTo: current?.yearTo ?? null,
+  });
+}
   /**
    * Navigates to a selected results page.
    */

@@ -756,18 +756,21 @@ export class SearchBar {
   }
 
   /**
-   * Clears the current expression and restores input focus.
-   */
-  protected clear(): void {
-    if (this.busy()) {
-      return;
-    }
-
-    this.draft.set('');
-    this.attempted.set(false);
-
-    this.inputRef().nativeElement.focus();
+ * Clears the search expression, notifies the parent,
+ * and restores input focus.
+ */
+protected clear(): void {
+  if (this.busy()) {
+    return;
   }
+
+  this.draft.set('');
+  this.attempted.set(false);
+
+  this.search.emit('');
+
+  this.inputRef().nativeElement.focus();
+}
 
   /**
    * Inserts an operator or wraps selected text with syntax.
