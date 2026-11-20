@@ -1,9 +1,14 @@
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
+
 import { provideHttpClient } from '@angular/common/http';
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+
 import {
   provideRouter,
   withComponentInputBinding,
-  withInMemoryScrolling
+  withInMemoryScrolling,
 } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -16,7 +21,7 @@ export const appConfig: ApplicationConfig = {
       routes,
       withComponentInputBinding(),
       withInMemoryScrolling({
-        scrollPositionRestoration: 'disabled'
+        scrollPositionRestoration: 'enabled',
       })
     ),
   ],

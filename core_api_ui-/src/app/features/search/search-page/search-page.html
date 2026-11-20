@@ -1,0 +1,262 @@
+
+<div class="search-page">
+
+  <!-- Search hero -->
+  <section
+    class="hero"
+    [class.hero-compact]="urlParams()"
+    aria-labelledby="hero-title"
+  >
+    @if (!urlParams()) {
+      <div class="hero-content">
+        <span class="hero-eyebrow">RESEARCH DISCOVERY PLATFORM</span>
+
+        <h1 id="hero-title" class="hero-title">
+          Explore research.
+          <span>Discover new perspectives.</span>
+        </h1>
+
+        <p class="hero-lede">
+          Search open-access academic literature using Boolean precision.
+          Refine your queries, discover relevant publications and explore
+          research trends.
+        </p>
+      </div>
+    }
+
+    <div class="hero-search">
+      <app-search-bar
+        [query]="currentQuery()"
+        [busy]="store.isLoading()"
+        (search)="onSearch($event)"
+      />
+    </div>
+  </section>
+
+  <!-- Main workspace -->
+  <div
+    class="layout"
+    [class.layout-idle]="!urlParams()"
+    [class.layout-searching]="!!urlParams()"
+  >
+
+    <!-- Search history sidebar -->
+    <aside class="sidebar" aria-label="Search history">
+      <div class="sidebar-content">
+
+        @if (history.hasAny()) {
+          <app-search-history-panel
+            [history]="history.history()"
+            [saved]="history.saved()"
+            (select)="onHistorySelect($event)"
+            (removeSaved)="history.removeSaved($event)"
+            (clearHistory)="history.clearHistory()"
+          />
+        } @else {
+          <section class="side-section">
+            <div class="section-heading">
+              <h2 class="side-heading">Recent searches</h2>
+            </div>
+
+            <div class="history-empty">
+              <span class="history-icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="9"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  />
+                  <path
+                    d="M12 7V12L15 14"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </span>
+
+              <p class="history-empty-title">
+                No search history yet
+              </p>
+
+              <p class="muted small">
+                Your recent and saved searches will appear here.
+                They are stored locally in this browser.
+              </p>
+            </div>
+          </section>
+        }
+
+      </div>
+    </aside>
+
+    <!-- Main results area -->
+    <main class="results" id="main" aria-label="Research results">
+
+      @if (urlParams(); as params) {
+
+        <h2 id="results-heading" class="sr-only">
+          Search results
+        </h2>
+
+        <!-- Results controls -->
+        <section class="results-controls" aria-label="Result controls">
+          <app-results-toolbar
+            [total]="store.totalHits()"
+            [rangeStart]="store.rangeStart()"
+            [rangeEnd]="store.rangeEnd()"
+            [pageSize]="params.pageSize"
+            [sort]="params.sort"
+            [yearFrom]="params.yearFrom"
+            [yearTo]="params.yearTo"
+            [saved]="isSaved()"
+            [loading]="store.isLoading()"
+            [canExport]="store.papers().length > 0"
+            (pageSizeChange)="onPageSizeChange($event)"
+            (sortChange)="onSortChange($event)"
+            (yearRangeChange)="onYearRange($event)"
+            (toggleSave)="toggleSave()"
+            (exportResults)="exportResults($event)"
+          />
+        </section>
+
+        <!-- Results content -->
+        <section class="results-content" aria-live="polite">
+
+          @switch (store.status()) {
+
+            @case ('loading') {
+              <div class="loading-state">
+                <app-results-skeleton [count]="params.pageSize" />
+              </div>
+            }
+
+            @case ('error') {
+              <div class="error-state-wrapper">
+                <app-error-state
+                  [error]="store.error()!"
+                  (retry)="store.retry()"
+                />
+              </div>
+            }
+
+            @default {
+              @if (store.isEmpty()) {
+
+                <app-empty-state
+                  mode="no-results"
+                  [query]="params.query"
+                  [hasFilters]="hasYearFilter()"
+                  [examples]="examples"
+                  (exampleSelected)="onSearch($event)"
+                  (clearFilters)="onYearRange({
+                    yearFrom: null,
+                    yearTo: null
+                  })"
+                />
+
+              } @else {
+
+                <div class="results-list-header">
+                  <h3 class="results-section-title">
+                    Research publications
+                  </h3>
+
+                  <span class="results-count">
+                    {{ store.papers().length }} displayed
+                  </span>
+                </div>
+
+                <ol class="paper-list">
+                  @for (paper of store.papers(); track paper.id) {
+                    <li class="paper-list-item">
+                      <app-paper-card
+                        [paper]="paper"
+                        (open)="selectedPaper.set($event)"
+                      />
+                    </li>
+                  }
+                </ol>
+
+                @if (
+                  store.isTruncated() &&
+                  params.page === store.totalPages()
+                ) {
+                  <div class="results-notice" role="note">
+                    <span class="notice-indicator" aria-hidden="true"></span>
+
+                    <p>
+                      Browsing is limited to the first 10,000 matching
+                      publications. Refine your search or apply a
+                      publication year filter to narrow your results.
+                    </p>
+                  </div>
+                }
+
+                <nav class="pagination-container" aria-label="Results pagination">
+                  <app-pagination
+                    [page]="params.page"
+                    [totalPages]="store.totalPages()"
+                    (pageChange)="onPageChange($event)"
+                  />
+                </nav>
+
+              }
+            }
+          }
+
+        </section>
+
+      } @else {
+
+        <section class="welcome-content" aria-label="Getting started">
+          <app-empty-state
+            mode="welcome"
+            [examples]="examples"
+            (exampleSelected)="onSearch($event)"
+          />
+        </section>
+
+      }
+
+    </main>
+
+    <!-- Analytics sidebar -->
+    @if (urlParams()) {
+      <aside class="insights" aria-label="Research analytics">
+        <div class="insights-content">
+          <div class="insights-heading">
+            <span class="insights-eyebrow">DISCOVER</span>
+            <h2>Research insights</h2>
+            <p>
+              Explore publication patterns and research trends.
+            </p>
+          </div>
+
+          <app-analytics-panel
+            [aggregations]="store.aggregations()"
+            [status]="store.analyticsStatus()"
+            [analyticsError]="store.analyticsError()"
+            [papers]="store.papers()"
+            [selectedYear]="selectedYear()"
+            (yearSelected)="onYearSelected($event)"
+          />
+        </div>
+      </aside>
+    }
+
+  </div>
+
+  <!-- Selected publication details -->
+  <app-paper-detail
+    [paper]="selectedPaper()"
+    (closed)="selectedPaper.set(null)"
+  />
+
+</div>
