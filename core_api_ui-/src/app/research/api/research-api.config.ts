@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+import { environment} from '../../../environments/environment';
 
 export interface CoreApiConfig {
   /** CORE API v3 base URL. */
@@ -22,7 +23,7 @@ export interface CoreApiConfig {
 
 export const DEFAULT_CORE_API_CONFIG: CoreApiConfig = {
   baseUrl: 'https://api.core.ac.uk/v3',
-  apiKey: '',
+  apiKey: environment.coreApiKey,
   maxPageSize: 100,
   maxResultWindow: 10_000,
   retryCount: 1,
