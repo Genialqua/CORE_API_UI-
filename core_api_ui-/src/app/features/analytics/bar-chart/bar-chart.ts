@@ -21,7 +21,7 @@ import {
   type ChartConfiguration,
 } from 'chart.js';
 
-import { ChartDatum } from './chart-aggregation';
+import { ChartDatum } from '../chart-aggregation';
 
 Chart.register(
   BarController,

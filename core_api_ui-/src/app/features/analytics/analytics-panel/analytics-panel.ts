@@ -25,7 +25,7 @@ import {
   topEntries,
   yearCountsFromPapers,
   yearSeries,
-} from '../bar-chart/chart-aggregation';
+} from '../chart-aggregation';
 
 type AnalyticsTab = 'year' | 'publisher' | 'type' | 'author';
 
