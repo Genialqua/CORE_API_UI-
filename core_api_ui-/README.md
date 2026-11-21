@@ -1,16 +1,18 @@
 # CORE API UI
 
-An Angular-based web application providing an interface for interacting with the CORE API platform.
+An Angular-based web application providing an interface for interacting with the CORE API platform and exploring open-access research data.
 
 ## Project Repository
 
-**GitHub:** [https://github.com/Genialqua/CORE_API_UI-](https://github.com/Genialqua/CORE_API_UI-)
+**GitHub Repository:**  
+[https://github.com/Genialqua/CORE_API_UI-](https://github.com/Genialqua/CORE_API_UI-)
 
-**Application Source:** [core_api_ui-](https://github.com/Genialqua/CORE_API_UI-/tree/main/core_api_ui-)
+**Application Source:**  
+[core_api_ui-](https://github.com/Genialqua/CORE_API_UI-/tree/main/core_api_ui-)
 
 ## Getting Started
 
-Follow the instructions below to clone the repository, install dependencies, configure your API credentials and run the application locally.
+Follow the instructions below to clone the repository, install dependencies, configure the Angular environment and run the application locally.
 
 ### 1. Prerequisites
 
@@ -25,19 +27,19 @@ Ensure the following tools are installed:
 
 Clone the project:
 
-```
+```bash
 git clone https://github.com/Genialqua/CORE_API_UI-.git
 ```
 
 Navigate into the repository:
 
-```
+```bash
 cd CORE_API_UI-
 ```
 
 Navigate into the Angular application directory:
 
-```
+```bash
 cd core_api_ui-
 ```
 
@@ -47,20 +49,20 @@ This project requires Node.js 22.
 
 Switch to the required version using NVM:
 
-```
+```bash
 nvm use 22
 ```
 
 If Node.js 22 is not installed, install it first:
 
-```
+```bash
 nvm install 22
 nvm use 22
 ```
 
-Verify your installed versions:
+Verify the installed versions:
 
-```
+```bash
 node -v
 npm -v
 ```
@@ -69,23 +71,44 @@ npm -v
 
 Install the project dependencies:
 
-```
+```bash
 npm install
 ```
 
-### 5. Configure CORE API Keys
+### 5. Configure Angular Environment Variables
 
-Before starting the application, configure your CORE API credentials.
+The application uses Angular environment configuration to manage application settings and CORE API connection details.
 
-Open the following configuration file:
+Locate the environment configuration file:
 
+```text
+src/environments/environment.ts
 ```
-src/app/research/api/research-api.config.ts
+
+Configure the CORE API settings:
+
+```typescript
+export const environment = {
+  production: false,
+
+  coreApi: {
+    baseUrl: 'https://api.core.ac.uk/v3',
+    apiKey: 'YOUR_CORE_API_KEY',
+  },
+};
 ```
 
-Enter the required CORE API keys in their respective configuration fields.
+Replace `YOUR_CORE_API_KEY` with your valid CORE API key.
 
-**Security Notice:** Do not commit confidential API credentials, private keys or secrets to the repository. Use environment-based configuration and a secure backend for sensitive credentials where supported by the API architecture.
+The application configuration imports these values from the Angular environment file, allowing the API settings to be managed separately from the API service implementation.
+
+**Security Notice:**
+
+Angular environment files are bundled into the client-side application during compilation. Consequently, API keys configured in these files are accessible to users inspecting the browser application.
+
+- Do not commit real API credentials to the public repository.
+- Do not treat Angular environment variables as secure storage for API keys.
+- For production deployments, use a secure backend to store the CORE API key and proxy API requests.
 
 ### 6. Start the Development Server
 
@@ -93,9 +116,9 @@ There are two ways to start the Angular development server.
 
 **Option A: Using globally installed Angular CLI**
 
-If Angular CLI is already installed globally, run:
+If Angular CLI is installed globally, run:
 
-```
+```bash
 ng serve
 ```
 
@@ -103,7 +126,7 @@ ng serve
 
 If Angular CLI is not installed globally, run:
 
-```
+```bash
 npx ng serve
 ```
 
@@ -121,13 +144,13 @@ The application automatically reloads whenever changes are made to the source fi
 
 Use Angular CLI to generate new components:
 
-```
+```bash
 ng generate component component-name
 ```
 
 View available Angular CLI commands:
 
-```
+```bash
 ng generate --help
 ```
 
@@ -135,7 +158,7 @@ ng generate --help
 
 To build the application:
 
-```
+```bash
 ng build
 ```
 
@@ -145,35 +168,45 @@ Angular optimizes the production build for performance and deployment.
 
 ### Run Unit Tests
 
-This project uses Vitest as its unit testing framework.
+This project uses Jasmine as its testing framework and Karma as its test runner.
 
-Execute the unit tests using:
+Execute the unit tests:
 
-```
+```bash
 ng test
+```
+
+To execute tests once without starting watch mode:
+
+```bash
+ng test --watch=false
 ```
 
 ### Run End-to-End Tests
 
 To execute end-to-end tests:
 
-```
+```bash
 ng e2e
 ```
 
-Note: An end-to-end testing framework must be configured separately, as Angular CLI does not provide one by default.
+**Note:** An end-to-end testing framework must be configured separately, as Angular CLI does not provide one by default.
 
 ---
 
 ## Technology Stack
 
-| Technology | Purpose                           |
-| ---------- | --------------------------------- |
-| Angular 22 | Frontend application framework    |
-| Node.js 22 | JavaScript runtime                |
-| npm        | Package management                |
-| CORE API   | Research data and API integration |
-| Vitest     | Unit testing                      |
+| Technology | Purpose |
+|---|---|
+| Angular 22 | Frontend application framework |
+| TypeScript | Application development language |
+| Node.js 22 | JavaScript runtime |
+| npm | Package management |
+| CORE API v3 | Research data and API integration |
+| Jasmine | Unit testing framework |
+| Karma | Unit test execution environment |
+
+---
 
 ## Additional Resources
 
@@ -181,7 +214,8 @@ Note: An end-to-end testing framework must be configured separately, as Angular 
 - [Angular CLI Documentation](https://angular.dev/tools/cli)
 - [Node.js Documentation](https://nodejs.org/docs/)
 - [NVM Documentation](https://github.com/nvm-sh/nvm)
-- [Vitest Documentation](https://vitest.dev/)
+- [Jasmine Documentation](https://jasmine.github.io/)
+- [Karma Documentation](https://karma-runner.github.io/)
 
 ## Contribution Guidelines
 
@@ -198,6 +232,5 @@ When contributing:
 
 ---
 
-**CORE API UI**\
-*An interface for accessing and exploring CORE API research data.*
-
+**CORE API UI**  
+*An interface for accessing and exploring open-access research data.*
