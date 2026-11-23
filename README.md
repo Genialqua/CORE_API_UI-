@@ -10,9 +10,37 @@ An Angular-based web application providing an interface for interacting with the
 **Application Source:**  
 [core_api_ui-](https://github.com/Genialqua/CORE_API_UI-/tree/main/core_api_ui-)
 
+## User Experience Enhancements - Added Features
+
+The application includes features designed to improve usability, streamline research workflows, and make it easier for users to manage and revisit their research activities.
+
+### 1. Saved Searches
+
+Users can save frequently used or important search queries for future reference.
+
+This feature allows users to:
+
+- Preserve useful search queries without having to recreate them.
+- Quickly revisit previously saved research topics.
+- Maintain convenient access to recurring research interests.
+- Improve research continuity and reduce repetitive searches.
+
+### 2. Recent Searches
+
+The application maintains a history of recent search queries, allowing users to revisit their previous research activities.
+
+This feature enables users to:
+
+- Quickly access recently executed searches.
+- Resume previous research sessions.
+- Re-run earlier queries without manually entering them again.
+- Navigate between research topics more efficiently.
+
+Together, Saved Searches and Recent Searches improve research continuity, reduce repetitive interactions, and provide a more convenient and efficient user experience.
+
 ## Getting Started
 
-Follow the instructions below to clone the repository, install dependencies, configure the Angular environment and run the application locally.
+Follow the instructions below to clone the repository, install dependencies, configure the Angular environment, and run the application locally.
 
 ### 1. Prerequisites
 
@@ -100,7 +128,7 @@ export const environment = {
 
 Replace `YOUR_CORE_API_KEY` with your valid CORE API key.
 
-The application configuration imports these values from the Angular environment file, allowing the API settings to be managed separately from the API service implementation.
+The application configuration imports these values from the Angular environment file, allowing API settings to be managed separately from the API service implementation.
 
 **Security Notice:**
 
@@ -232,5 +260,6 @@ When contributing:
 
 ---
 
-**CORE API UI**  
+**CORE API UI**
+
 *An interface for accessing and exploring open-access research data.*
